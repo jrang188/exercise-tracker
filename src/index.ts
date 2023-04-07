@@ -1,10 +1,12 @@
-import dotenv from "dotenv";
-import express, { type Request, type Response } from "express";
-import bodyParser from "body-parser";
-import cors from "cors";
+import dotenv from 'dotenv';
+import express, { type Request, type Response } from 'express';
+import bodyParser from 'body-parser';
+import cors from 'cors';
+import { PrismaClient } from '@prisma/client';
 
 dotenv.config();
 const app = express();
+const prisma = new PrismaClient();
 
 // Basic Configuration
 const port: number =
@@ -12,9 +14,9 @@ const port: number =
 
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(express.static("public"));
+app.use(express.static('public'));
 
-app.get("/", (req: Request, res: Response) => {
+app.get('/', (req: Request, res: Response) => {
   res.sendFile(`${process.cwd()}/views/index.html`);
 });
 
