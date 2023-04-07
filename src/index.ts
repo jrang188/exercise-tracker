@@ -20,6 +20,22 @@ app.get('/', (req: Request, res: Response) => {
   res.sendFile(`${process.cwd()}/views/index.html`);
 });
 
+app.post('/api/users', async (req: Request, res: Response) => {
+  const { username } = req.body;
+
+  const user = await prisma.user.upsert({
+    where: { username: username },
+    create: { username: username },
+    update: {}, // if user exists, do not update
+  });
+  res.json({ _id: user.id, username: user.username });
+});
+
+app.get('/api/users', async (req: Request, res: Response) => {
+  const users = await prisma.user.findMany();
+  res.json(users);
+});
+
 app.listen(port, () => {
   console.log(`Listening on http://localhost:${port}`);
 });
