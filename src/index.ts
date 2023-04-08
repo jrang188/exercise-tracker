@@ -33,7 +33,15 @@ app.post('/api/users', async (req: Request, res: Response) => {
 
 app.get('/api/users', async (req: Request, res: Response) => {
   const users = await prisma.user.findMany();
-  res.json(users);
+
+  const response = users.map((user) => {
+    return {
+      _id: user.id.toString(),
+      username: user.username,
+    };
+  });
+
+  res.json(response);
 });
 
 app.post('/api/users/:id/exercises', async (req: Request, res: Response) => {
@@ -85,7 +93,7 @@ app.get('/api/users/:id/logs', async (req: Request, res: Response) => {
     },
   });
 
-  const filteredLogs = logs?.sessions.filter((session) => {
+  const filteredLogs = logs?.sessions.map((session) => {
     return {
       description: session.desc,
       duration: session.duration,
@@ -100,6 +108,9 @@ app.get('/api/users/:id/logs', async (req: Request, res: Response) => {
     count: filteredLogs?.length,
     log: filteredLogs,
   };
+
+  console.log(response);
+  console.log(filteredLogs);
 
   res.json(response);
 });
