@@ -28,7 +28,7 @@ app.post('/api/users', async (req: Request, res: Response) => {
     create: { username: username },
     update: {}, // if user exists, do not update
   });
-  res.json({ _id: user.id.toString, username: user.username });
+  res.json({ _id: user.id.toString(), username: user.username });
 });
 
 app.get('/api/users', async (req: Request, res: Response) => {
