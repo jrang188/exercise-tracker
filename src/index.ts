@@ -107,6 +107,4 @@ app.get('/api/users/:id/logs', async (req: Request, res: Response) => {
   res.json(response);
 });
 
-app.listen(port, () => {
-  console.log(`Listening on http://localhost:${port}`);
-});
+app.listen(port);
