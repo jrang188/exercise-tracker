@@ -59,11 +59,52 @@ app.post('/api/users/:id/exercises', async (req: Request, res: Response) => {
 
   res.json({
     username: user?.username,
-    _id: exerciseSession.id,
+    _id: exerciseSession.userId,
     description: exerciseSession.desc,
     duration: exerciseSession.duration,
     date: exerciseSession.date.toDateString(),
   });
+});
+
+app.get('/api/users/:id/logs', async (req: Request, res: Response) => {
+  const from = req.query.from ? new Date(req.query.from as string) : undefined;
+  const to = req.query.to ? new Date(req.query.to as string) : undefined;
+  const limit = req.query.limit
+    ? parseInt(req.query.limit as string)
+    : undefined;
+
+  const logs = await prisma.user.findUnique({
+    where: { id: parseInt(req.params.id) },
+    include: {
+      sessions: {
+        where: {
+          date: {
+            gte: from,
+            lt: to,
+          },
+        },
+      },
+    },
+  });
+
+  const filteredLogs = logs?.sessions.filter((session) => {
+    return {
+      description: session.desc,
+      duration: session.duration,
+      date: session.date.toDateString(),
+    }
+  }).slice(0, limit);
+
+
+  const response = {
+    username: logs?.username,
+    _id: logs?.id,
+    count: filteredLogs?.length,
+    log: filteredLogs,
+  };
+
+
+  res.json(response);
 });
 
 app.listen(port, () => {
