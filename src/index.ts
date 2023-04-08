@@ -44,7 +44,7 @@ app.post('/api/users/:id/exercises', async (req: Request, res: Response) => {
     data: {
       desc: description,
       duration: parseInt(duration),
-      date: new Date(date),
+      date: date ? new Date(date) : new Date(),
       User: {
         connect: {
           id: parseInt(req.params.id),
