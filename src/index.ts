@@ -28,7 +28,7 @@ app.post('/api/users', async (req: Request, res: Response) => {
     create: { username: username },
     update: {}, // if user exists, do not update
   });
-  res.json({ _id: user.id, username: user.username });
+  res.json({ _id: user.id.toString, username: user.username });
 });
 
 app.get('/api/users', async (req: Request, res: Response) => {
@@ -59,7 +59,7 @@ app.post('/api/users/:id/exercises', async (req: Request, res: Response) => {
 
   res.json({
     username: user?.username,
-    _id: exerciseSession.userId,
+    _id: exerciseSession.userId.toString(),
     description: exerciseSession.desc,
     duration: exerciseSession.duration,
     date: exerciseSession.date.toDateString(),
@@ -98,11 +98,10 @@ app.get('/api/users/:id/logs', async (req: Request, res: Response) => {
 
   const response = {
     username: logs?.username,
-    _id: logs?.id,
+    _id: logs?.id.toString(),
     count: filteredLogs?.length,
     log: filteredLogs,
   };
-
 
   res.json(response);
 });
