@@ -38,8 +38,6 @@ app.get('/api/users', async (req: Request, res: Response) => {
 
 app.post('/api/users/:id/exercises', async (req: Request, res: Response) => {
   const { description, duration, date } = req.body;
-  console.log(req.body);
-  console.log(req.params);
   const exerciseSession = await prisma.exerciseSession.create({
     data: {
       desc: description,
