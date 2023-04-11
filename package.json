@@ -1,8 +1,8 @@
 {
-  "name": "fcc-exercise-tracker",
-  "version": "0.1.0",
-  "description": "A REST API project, part of Free Code Camp's curriculum",
-  "main": "index.js",
+  "name": "Exercise Tracker",
+  "version": "0.2.0",
+  "description": "My take on the Exercise Tracker API project from Free Code Camp's curriculum",
+  "main": "dist/index.js",
   "scripts": {
     "lint": "eslint --ignore-path .eslintignore --ext .js,.ts .",
     "format": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\"",
@@ -18,7 +18,7 @@
     "express": "^4.16.4"
   },
   "repository": {
-    "url": "https://github.com/freeCodeCamp/boilerplate-project-exercisetracker"
+    "url": "https://github.com/jrang188/exercise-trackerr"
   },
   "license": "MIT",
   "keywords": [
