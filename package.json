@@ -1,5 +1,5 @@
 {
-  "name": "Exercise Tracker",
+  "name": "exercise-tracker",
   "version": "0.2.0",
   "description": "My take on the Exercise Tracker API project from Free Code Camp's curriculum",
   "main": "dist/index.js",
