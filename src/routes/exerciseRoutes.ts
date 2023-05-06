@@ -1,103 +1,15 @@
-import express, { type Request, type Response } from "express";
-import { PrismaClient } from '@prisma/client';
+import express from "express";
+import {
+  addUser,
+  getUsers,
+  addExercise,
+  getUserLogs,
+} from "../controllers/exerciseControllers";
 
 const router = express.Router();
-const prisma = new PrismaClient();
 
-router.post("/api/users", async (req: Request, res: Response) => {
-  const { username } = req.body;
-
-  const user = await prisma.user.upsert({
-    where: { username: username },
-    create: { username: username },
-    update: {}, // if user exists, do not update
-  });
-  res.json({ _id: user.id.toString(), username: user.username });
-});
-
-router.get("/api/users", async (req: Request, res: Response) => {
-  const users = await prisma.user.findMany();
-
-  const response = users.map((user) => {
-    return {
-      _id: user.id.toString(),
-      username: user.username,
-    };
-  });
-
-  res.json(response);
-});
-
-router.post("/api/users/:id/exercises", async (req: Request, res: Response) => {
-  const { description, duration, date } = req.body;
-  const exerciseSession = await prisma.exerciseSession.create({
-    data: {
-      desc: description,
-      duration: parseInt(duration),
-      date: date ? new Date(date) : new Date(),
-      User: {
-        connect: {
-          id: parseInt(req.params.id),
-        },
-      },
-    },
-  });
-
-  const user = await prisma.user.findUnique({
-    where: { id: parseInt(req.params.id) },
-  });
-
-  res.json({
-    username: user?.username,
-    _id: exerciseSession.userId.toString(),
-    description: exerciseSession.desc,
-    duration: exerciseSession.duration,
-    date: exerciseSession.date.toDateString(),
-  });
-});
-
-router.get("/api/users/:id/logs", async (req: Request, res: Response) => {
-  const from = req.query.from ? new Date(req.query.from as string) : undefined;
-  const to = req.query.to ? new Date(req.query.to as string) : undefined;
-  const limit = req.query.limit
-    ? parseInt(req.query.limit as string)
-    : undefined;
-
-  const logs = await prisma.user.findUnique({
-    where: { id: parseInt(req.params.id) },
-    include: {
-      sessions: {
-        where: {
-          date: {
-            gte: from,
-            lt: to,
-          },
-        },
-      },
-    },
-  });
-
-  const filteredLogs = logs?.sessions
-    .map((session) => {
-      return {
-        description: session.desc,
-        duration: session.duration,
-        date: session.date.toDateString(),
-      };
-    })
-    .slice(0, limit);
-
-  const response = {
-    username: logs?.username,
-    _id: logs?.id.toString(),
-    count: filteredLogs?.length,
-    log: filteredLogs,
-  };
-
-  console.log(response);
-  console.log(filteredLogs);
-
-  res.json(response);
-});
+router.route("/").post(addUser).get(getUsers);
+router.post("/:id/exercises", addExercise);
+router.get("/:id/logs", getUserLogs);
 
 export default router;
