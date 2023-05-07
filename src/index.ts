@@ -1,7 +1,7 @@
-import dotenv from 'dotenv';
-import express, { type Request, type Response } from 'express';
-import cors from 'cors';
-import exerciseRoutes from './routes/exerciseRoutes';
+import dotenv from "dotenv";
+import express, { type Request, type Response } from "express";
+import cors from "cors";
+import exerciseRoutes from "./routes/exerciseRoutes";
 
 dotenv.config();
 const app = express();
@@ -12,12 +12,12 @@ const port: number =
 
 app.use(cors());
 app.use(express.urlencoded({ extended: false }));
-app.use(express.static('public'));
+app.use(express.static("public"));
 
-app.get('/', (req: Request, res: Response) => {
+app.get("/", (req: Request, res: Response) => {
   res.sendFile(`${process.cwd()}/views/index.html`);
 });
 
-app.use('/api/users', exerciseRoutes);
+app.use("/api/users", exerciseRoutes);
 
 app.listen(port);

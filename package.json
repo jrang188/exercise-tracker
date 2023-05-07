@@ -6,15 +6,16 @@
   "scripts": {
     "lint": "eslint --ignore-path .eslintignore --ext .js,.ts .",
     "format": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\"",
-    "build": "yarn tsc",
+    "build": "tsc",
+    "postinstall": "prisma migrate dev",
     "start": "node dist/index.js",
     "dev": "nodemon src/index.ts"
   },
   "dependencies": {
-    "@prisma/client": "^4.12.0",
+    "@prisma/client": "^4.13.0",
     "cors": "^2.8.5",
-    "dotenv": "^8.2.0",
-    "express": "^4.16.4"
+    "dotenv": "^8.6.0",
+    "express": "^4.18.2"
   },
   "repository": {
     "url": "https://github.com/jrang188/exercise-trackerr"
@@ -26,22 +27,20 @@
   ],
   "devDependencies": {
     "@types/cors": "^2.8.13",
-    "@types/dotenv": "^8.2.0",
     "@types/express": "^4.17.17",
-    "@types/node": "^18.15.11",
-    "@typescript-eslint/eslint-plugin": "^5.57.1",
-    "@typescript-eslint/parser": "^5.57.1",
-    "eslint": "^8.37.0",
+    "@types/node": "^18.16.5",
+    "@typescript-eslint/eslint-plugin": "^5.59.2",
+    "@typescript-eslint/parser": "^5.59.2",
+    "eslint": "^8.40.0",
     "eslint-config-prettier": "^8.8.0",
     "eslint-config-standard-with-typescript": "^34.0.1",
-    "eslint-plugin-import": "^2.25.2",
-    "eslint-plugin-n": "^15.0.0",
-    "eslint-plugin-promise": "^6.0.0",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-n": "^15.7.0",
+    "eslint-plugin-promise": "^6.1.1",
     "nodemon": "^2.0.22",
-    "prettier": "^2.8.7",
-    "prisma": "^4.12.0",
+    "prettier": "^2.8.8",
+    "prisma": "^4.13.0",
     "ts-node": "^10.9.1",
-    "typescript": "*"
-  },
-  "packageManager": "yarn@3.5.1"
+    "typescript": "^5.0.4"
+  }
 }
