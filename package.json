@@ -7,7 +7,7 @@
     "lint": "eslint --ignore-path .eslintignore --ext .js,.ts .",
     "format": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\"",
     "build": "tsc",
-    "postinstall": "prisma migrate dev",
+    "postinstall": "prisma generate",
     "start": "node dist/index.js",
     "dev": "nodemon src/index.ts"
   },
